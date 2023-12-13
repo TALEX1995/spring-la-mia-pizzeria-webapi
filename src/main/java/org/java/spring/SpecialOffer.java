@@ -2,6 +2,8 @@ package org.java.spring;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -69,6 +71,7 @@ public class SpecialOffer {
 		this.title = title;
 	}
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Pizza pizza;

@@ -47,7 +47,7 @@
 						<a class="btn btn-secondary" th:href="@{/pizzas/edit/{id} (id=${pizza.id})}">Modifica</a>
 						<a class="btn btn-primary" th:href="@{/pizzas/{id}(id=${pizza.id})}">Dettaglio</a>
 						<form th:action="@{/pizzas/delete/{id} (id=${pizza.id})}" method="POST">
-							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<!--							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
 							<button type="submit" class="btn btn-primary">Elimina</button>
 						</form>
 					</td>			

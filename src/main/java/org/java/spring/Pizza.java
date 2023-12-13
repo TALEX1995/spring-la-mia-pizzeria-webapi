@@ -6,8 +6,13 @@ import java.util.Set;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,7 +47,7 @@ public class Pizza {
 	private float price;
 	
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Ingredient> ingredients;
 	
 	public Pizza() {}
@@ -95,7 +100,7 @@ public class Pizza {
 		this.price = price;
 	}
 	
-	@OneToMany(mappedBy = "pizza")
+	@OneToMany(mappedBy = "pizza", cascade = CascadeType.REMOVE)
 	private Set<SpecialOffer> specialOffers;
 
 
@@ -106,7 +111,8 @@ public class Pizza {
 	public void setSpecialOffers(Set<SpecialOffer> specialOffers) {
 		this.specialOffers = specialOffers;
 	}
-
+	
+	@JsonProperty("ingredients")
 	public List<Ingredient> getIngredients() {
 		return ingredients;
 	}
@@ -115,13 +121,10 @@ public class Pizza {
 		this.ingredients = ingredients;
 	}
 	
-	public void setIngredients(Ingredient...ingredients) {
+	@JsonIgnore
+	private void setIngredients(Ingredient...ingredients) {
 		setIngredients(Arrays.asList(ingredients));
 	}
-	
-	
-
-
 	
 	
 }

@@ -13,7 +13,7 @@
 		<h1 th:if="${offer.id == 0}">Aggiungi una nuova Offerta per la [[${pizza.name}]]</h1>
 		<h1 th:unless="${offer.id == 0}">Modifica l'offerta della [[${pizza.name}]]</h1>
 		<form method="POST">
-			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+<!--			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
 			<!--Offer title-->
 			<div class="form-group my-2">
 				<label for="title">Nome Offerta</label>
