@@ -1,30 +1,51 @@
+<!-- SCRIPT -->
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+// Import dependency
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
+
+// Import components
+import PizzaIndex from './components/PizzaIndex.vue';
+import PizzaForm from './components/PizzaForm.vue';
+
+// Data
+const pizzas = ref(null);
+const isCreatingPizza = ref(false);
+
+// Functions
+const createdPizza = () => {
+  isCreatingPizza.value = false;
+  console.log(isCreatingPizza.value);
+  getPizzas();
+}
+
+
+// Get all pizzas with axios
+const getPizzas = async () => {
+  const data = await axios.get("http://localhost:8080/api/pizzas");
+  pizzas.value = data.data
+}
+
+
+
+// Mounted
+onMounted(getPizzas);
+
 </script>
 
+<!-- TEMPLATE -->
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <PizzaIndex v-if="!isCreatingPizza" :pizzas="pizzas" @deleted="getPizzas" />
+  <PizzaForm @created="createdPizza" v-if="isCreatingPizza" @back="isCreatingPizza = false" />
+  <button v-if="!isCreatingPizza" @click="isCreatingPizza = true">
+    Crea una nuova pizza</button>
 </template>
 
+
+<!-- STYLE -->
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+button {
+  background-color: black;
+  color: white;
 }
 </style>
